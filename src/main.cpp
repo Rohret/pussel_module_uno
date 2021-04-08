@@ -34,14 +34,34 @@ void loop()
   {
     if (cable_color[i] == BLACK)
     {
-      Serial.print("Lampan är avstängd på position: ");
-      Serial.println(i);
+      //Serial.print("Lampan är avstängd på position: ");
+      //Serial.println(i);
     }
   }
 
   for (int j = 0; j < AMOUNT_OF_CABLES; j++)
   {
-    Serial.println(cable_color[j]);
+    // Serial.println(cable_color[j]);
+    /*if (cable_color[j] == WHITE)
+    {
+      Serial.println("WHITE");
+    }
+    else if (cable_color[j] == RED)
+    {
+      Serial.println("RED");
+    }
+    else if (cable_color[j] == YELLOW)
+    {
+      Serial.println("YELLOW");
+    }
+    else if (cable_color[j] == BLUE)
+    {
+      Serial.println("BLUE");
+    }
+    else if (cable_color[j] == PURPLE)
+    {
+      Serial.println("PURPLE");
+    }*/
   }
 
   digitalWrite(change_io, 0); //enablar parrallel input

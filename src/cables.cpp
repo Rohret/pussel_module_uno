@@ -8,11 +8,11 @@ void cables_cut()
     for (int j = 0; j < AMOUNT_OF_CABLES; j++)
     {
         value = digitalRead(data_out);
-        Serial.print(" Sladd på position: ");
+       /* Serial.print(" Sladd på position: ");
         Serial.print(j);
         Serial.print(" avklippt: ");
         Serial.print(value);
-        Serial.println(" ");
+        Serial.println(" ");*/
         if (value)
         {
             data_in[j] = 1;
@@ -26,12 +26,12 @@ void cables_cut()
         digitalWrite(clock, HIGH);
     }
 
-    Serial.print(" Vilka sladdar som klipptes:");
+   // Serial.print(" Vilka sladdar som klipptes:");
 
     for (int k = 0; k < AMOUNT_OF_CABLES; k++)
     {
-        Serial.print(data_in[k]);
-        Serial.print(", ");
+       // Serial.print(data_in[k]);
+        //Serial.print(", ");
     }
-    Serial.println(" ");
+   // Serial.println(" ");
 }

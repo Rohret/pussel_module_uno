@@ -1,14 +1,19 @@
 #include <Arduino.h>
 #include "global.h"
+#include "success_fail.h"
 #define threecables 3
 #define second_cable 1
 #define third_cable 2
 #define fourth_cable 3
+#define fifth_cable 4
+#define sixth_cable 5
 #define FOUR 4
 #define TWO 2
 
 void three_cables()
+
 {
+
     int temp = 0;
     int counter = 0;
 
@@ -33,12 +38,13 @@ void three_cables()
 
                         if (data_in[j] == 1)
                         {
-                            Serial.print("SUCCESS");
+                            success();
+
                             return;
                         }
                         else
                         {
-                            Serial.print("DEFFFFEAT");
+                            fail();
                             return;
                         }
                     }
@@ -56,12 +62,12 @@ void three_cables()
             {
                 if (data_in[i] == 1 && cable_color[i] == WHITE)
                 {
-                    Serial.print("SUCCESS");
+                    success();
                     return;
                 }
                 if (data_in[i] == 0 && cable_color[i] == WHITE)
                 {
-                    Serial.print("DEFEAT");
+                    fail();
                     return;
                 }
             }
@@ -84,12 +90,12 @@ void three_cables()
     }
     if (counter >= second_cable && data_in[temp] == 1)
     {
-        Serial.print("SUCCESS");
+        success();
         return;
     }
     if (counter >= second_cable && data_in[temp] == 0)
     {
-        Serial.print("DEFEAT");
+        fail();
         return;
     }
 
@@ -97,11 +103,9 @@ void three_cables()
     for (int i = 0; i < AMOUNT_OF_CABLES; i++)
     {
 
-        Serial.println("counter::");
-        Serial.println(counter);
         if (counter == third_cable && data_in[i] == 1 && cable_color[i] != BLACK)
         {
-            Serial.print("SUCCESS");
+            success();
             return;
         }
         if (cable_color[i] != BLACK)
@@ -109,7 +113,7 @@ void three_cables()
             counter++;
         }
     }
-    Serial.print("DEFEAT");
+    fail();
     return;
 }
 
@@ -133,12 +137,12 @@ void four_cables()
     }
     if (counter > second_cable && data_in[temp] == 1)
     {
-        Serial.print("SUCCESS10");
+        success();
         return;
     }
     if (counter > second_cable && data_in[temp] == 0)
     {
-        Serial.print("Defeat!");
+        fail();
         return;
     }
     counter = 0;
@@ -162,12 +166,12 @@ void four_cables()
             {
                 if (data_in[temp] == 1 && cable_color[i] == YELLOW)
                 {
-                    Serial.println("SUCCESS");
+                    success();
                     return;
                 }
                 if (data_in[temp] == 0 && cable_color[i] == YELLOW)
                 {
-                    Serial.print("Defeat!!");
+                    fail();
                     return;
                 }
             }
@@ -198,12 +202,12 @@ void four_cables()
 
     if (counter == 1 && data_in[temp] == 1)
     {
-        Serial.println("SUCCESS");
+        success();
         return;
     }
     if (counter == 1 && data_in[temp] == 0)
     {
-        Serial.print("DEefeat!!");
+        fail();
         return;
     }
     counter = 0;
@@ -219,12 +223,12 @@ void four_cables()
 
             if (counter > 1 && data_in[i] == 1 && counter_two == FOUR)
             {
-                Serial.println("SUCCEesSS");
+                success();
                 return;
             }
             if (counter > 1 && data_in[i] == 0 && counter_two == FOUR)
             {
-                Serial.println("DDEFEAT");
+                fail();
                 return;
             }
         }
@@ -242,20 +246,197 @@ void four_cables()
             }
             if (counter == fourth_cable && data_in[temp] == 1)
             {
-                Serial.println("SUCCEssssSS");
+                success();
                 return;
             }
             if (counter == fourth_cable && data_in[temp] == 0)
             {
-                Serial.println("DEF");
+                fail();
                 return;
             }
 
             counter++;
         }
     }
+    fail();
+    return;
 }
 
-void five_cables() {}
+void five_cables()
+{
+    int counter = 0;
+    int temp = 0;
+    int temp_second = 0;
+    int check_red = 0;
+    int check_yellow = 0;
+    int check_purple = 0;
+    int check_loop = 0;
+    for (int i = 0; i < AMOUNT_OF_CABLES; i++)
+    {
+        if (cable_color[i] != BLACK)
+        {
 
-void six_cables() {}
+            if (counter == fourth_cable)
+            {
+                temp = i;
+            }
+            if (counter == fifth_cable && cable_color[sixth_cable] == PURPLE)
+            {
+                if (data_in[temp] == 1)
+                {
+                    success();
+                    return;
+                }
+                if (data_in[temp] == 0)
+                {
+                    fail();
+                    return;
+                }
+            }
+
+            counter++;
+        }
+    }
+    temp = 0;
+    counter = 0;
+    for (int i = 0; i < AMOUNT_OF_CABLES; i++)
+    {
+        if (cable_color[i] != BLACK)
+        {
+
+            if (check_loop == 0)
+            {
+                check_loop = 1;
+                temp = i;
+            }
+            if (counter == second_cable)
+            {
+                temp_second = i;
+            }
+
+            if (cable_color[i] == RED)
+            {
+                check_red++;
+            }
+            if (cable_color[i] == YELLOW)
+            {
+                check_yellow++;
+            }
+            if (cable_color[i] == PURPLE)
+            {
+                check_purple++;
+            }
+            counter++;
+        }
+    }
+    if (data_in[temp] == 1 && check_red == 1 && check_yellow > 1)
+    {
+        success();
+        return;
+    }
+    if (data_in[temp] == 0 && check_red == 1 && check_yellow > 1)
+    {
+        fail();
+        return;
+    }
+
+    if (data_in[temp_second] == 1 && check_purple == 0)
+    {
+        success();
+        return;
+    }
+    if (data_in[temp_second] == 0 && check_purple == 0)
+    {
+        fail();
+        return;
+    }
+    if (data_in[temp] == 1)
+    {
+        success();
+        return;
+    }
+
+    fail();
+    return;
+}
+
+void six_cables()
+{
+    int counter = 0;
+    int check_yellow = 0;
+    int check_white = 0;
+    int check_red = 0;
+
+    for (int i = 0; i < AMOUNT_OF_CABLES; i++)
+    {
+        if (cable_color[i] != BLACK)
+        {
+            if (cable_color[i] == YELLOW)
+            {
+                check_yellow++;
+            }
+            if (cable_color[i] == WHITE)
+            {
+                check_white++;
+            }
+            if (cable_color[i] == RED)
+            {
+                check_red++;
+            }
+
+            counter++;
+        }
+    }
+    if (check_yellow == 0)
+    {
+        if (data_in[third_cable] == 1)
+        {
+            success();
+            return;
+        }
+        if (data_in[third_cable] == 0)
+        {
+            fail();
+            return;
+        }
+    }
+
+    if (check_yellow == 1 && check_white > 1)
+    {
+        if (data_in[fourth_cable] == 1)
+        {
+            success();
+            return;
+        }
+        if (data_in[fourth_cable] == 0)
+        {
+            fail();
+            return;
+        }
+    }
+
+    if (check_red == 0)
+    {
+        if (data_in[sixth_cable] == 1)
+        {
+            success();
+            return;
+        }
+        if (data_in[sixth_cable] == 0)
+        {
+            fail();
+            return;
+        }
+    }
+
+    if (data_in[fourth_cable] == 1)
+    {
+        // success();
+        return;
+    }
+    if (data_in[fourth_cable] == 0)
+    {
+        //fail();
+        return;
+    }
+}
