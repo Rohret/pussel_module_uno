@@ -5,7 +5,7 @@
 #include "bomb_manual.h"
 
 CRGB leds[NUM_LEDS];
-// FÅR INTE VARA MER ÄN 3 SLADDOR SOM ÄR AVSTÄNGDA
+//TODO, FÅR INTE VARA MER ÄN 3 SLADDOR SOM ÄR AVSTÄNGDA
 void random_color()
 {
     for (int i = 0; i < AMOUNT_OF_CABLES; i++)
